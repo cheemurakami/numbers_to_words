@@ -8,16 +8,13 @@ class Number
     @return_arr = []
   end
 
-
-
-
   def single_digit
     @one_to_nine.fetch(@number.to_s)
   end
   
   def double_digit
     if @ten_to_nineteen.include?(@number.to_s)
-      return @ten_to_nineteen.fetch(@number.to_s)
+      @ten_to_nineteen.fetch(@number.to_s)
     else
       new_arr = @number.to_s.split("")
       @return_arr.push(@tenths.fetch(new_arr[0])) #["forty"]
@@ -27,18 +24,26 @@ class Number
   end
 
   def triple_digit
-    new_arr = @number.to_s.split("") 
-    @return_arr.push(@one_to_nine.fetch(new_arr[0]) + " hundred")
-    pass_arr = []
-    pass_arr.push(new_arr[1])
-    pass_arr.push(new_arr[2]) #["4","2"]
-    pass_num = Number.new(pass_arr.join("")) #42
-    pass_num.double_digit
-   
-    @return_arr.join(" ")
+    if @number.to_s.split("")[1] == '0' && @number.to_s.split("")[2] == '0'
+      Number.new(@number.to_s.split("")[0]).single_digit + ' hundred' 
+    else
+      two_digit = [@number.to_s.split("")[1],@number.to_s.split("")[2]].join("").to_i
+      Number.new(two_digit).double_digit
+    end
   end
 
-# 142
-# 116 -> 1, 16
+
+  # def triple_digit
+  #   new_arr = @number.to_s.split("") 
+  #   @return_arr.push(@one_to_nine.fetch(new_arr[0]) + " hundred")
+  #   pass_arr = []
+  #   pass_arr.push(new_arr[1])
+  #   pass_arr.push(new_arr[2]) #["4","2"]
+  #   pass_num = Number.new(pass_arr.join("")) #42
+  #   pass_num.double_digit
+   
+  #   @return_arr.join(" ")
+  # end
+
 
 end
